@@ -1,4 +1,4 @@
-package org.msy.hospital.config;
+package org.msy.hospital.dict.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
@@ -9,19 +9,18 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author 11612
- * @date 2023/3/20
+ * @date 2023/3/23
  */
 @Configuration
-@MapperScan("org.msy.hospital.mapper")
-public class HospConfig {
+@MapperScan("org.msy.hospital.dict.mapper")
+public class DictConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(){
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        // 分页拦截器
+// 分页拦截器
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
-        // 乐观锁拦截器
+// 乐观锁拦截器
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return interceptor;
-
     }
 }

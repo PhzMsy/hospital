@@ -29,6 +29,8 @@
         <druid.version>1.1.10</druid.version>
         <swagger.version>2.9.2</swagger.version>
         <jodatime.version>2.10.1</jodatime.version>
+        <!-- parent工程 -->
+        <easyexcel.version>2.2.6</easyexcel.version>
     </properties>
     <dependencies>
     <dependency>
@@ -76,6 +78,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
+        </dependency>
+        <!-- dict工程 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>${easyexcel.version}</version>
         </dependency>
     </dependencies>
 

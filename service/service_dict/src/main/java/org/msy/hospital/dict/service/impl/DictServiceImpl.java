@@ -9,6 +9,8 @@ import org.msy.hospital.dict.service.DictService;
 import org.msy.hospital.model.dict.Dict;
 import org.msy.hospital.vo.dict.DictEeVo;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +26,7 @@ import java.util.List;
  */
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
+    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
     @Override
     public List<Dict> findChildrenData(Long id) {
         // 根据父id查询子数据
@@ -63,6 +66,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
 
     }
+    @CacheEvict(value = "dict",allEntries = true)
     @Override
     public void importData(MultipartFile file) {
         try {

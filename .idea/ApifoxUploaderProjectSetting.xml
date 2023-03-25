@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ApifoxUploaderProjectSetting">
+    <option name="apifoxAccessToken" value="APS-8dJUZ8iZXNZnoswP4PYUvnOp06Gq9nV8" />
+    <option name="apifoxApiOverwriteMode" value="覆盖所有字段" />
+    <option name="apifoxProjectIds">
+      <array>
+        <option value="# ModuleName:ProjectID" />
+        <option value="service:2490513" />
+        <option value="" />
+        <option value="service-hospital:2490513" />
+        <option value="service_dict:2490513" />
+        <option value="service-test:2490513" />
+      </array>
+    </option>
+    <option name="yapiTokens" value="" />
+  </component>
+</project>

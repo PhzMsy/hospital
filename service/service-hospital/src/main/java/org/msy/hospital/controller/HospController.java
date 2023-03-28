@@ -2,9 +2,14 @@ package org.msy.hospital.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.msy.hospital.common.exception.YyghException;
 import org.msy.hospital.common.result.Result;
+import org.msy.hospital.common.result.ResultCodeEnum;
+import org.msy.hospital.common.utils.HttpRequestHelper;
 import org.msy.hospital.common.utils.MD5;
+import org.msy.hospital.model.hosp.Hospital;
 import org.msy.hospital.model.hosp.HospitalSet;
 import org.msy.hospital.service.HospService;
 import org.msy.hospital.vo.hosp.HospitalSetQueryVo;
@@ -12,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -139,6 +147,35 @@ public class HospController {
         String signKey = byId.getSignKey();
         return Result.ok();
     }
+    @ApiOperation(value = "获取医院信息")
+    @PostMapping("hospital/show")
+    public Result hospital(HttpServletRequest request) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Map<String, Object> paramMap = HttpRequestHelper.switchMap(parameterMap);
+//签名校验
+        String hoscode = (String)paramMap.get("hoscode");
+        if(!StringUtils.hasLength(hoscode)) {
+            throw new YyghException(ResultCodeEnum.PARAM_ERROR);
+        }
+        String signKey = (String)paramMap.get("sign");
+        String utfSignKey = hospServiceImpl.getSignKey(hoscode);
+        if(!StringUtils.hasLength(utfSignKey)){
+            try {
+                byte[] bytes = utfSignKey.getBytes("UTF-8");
+                utfSignKey = new String(bytes);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        String signKeyMD5 = MD5.encrypt(utfSignKey);
+        if(!signKey.equals(signKeyMD5)) {
+            throw new YyghException(ResultCodeEnum.SIGN_ERROR);
+        }
+        Hospital hospital = hospServiceImpl.getByHoscode((String)
+                paramMap.get("hoscode"));
+        return Result.ok(hospital);
+    }
+
 
 
 

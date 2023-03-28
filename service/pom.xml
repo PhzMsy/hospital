@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>service-hospital</module>
-        <module>service_dict</module>
+        <module>service-dict</module>
         <module>service-test</module>
     </modules>
 
@@ -22,5 +22,17 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <version>2021.0.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>3.1.5</version>
+        </dependency>
+    </dependencies>
 
 </project>

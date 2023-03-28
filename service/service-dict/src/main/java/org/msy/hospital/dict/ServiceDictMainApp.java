@@ -1,4 +1,4 @@
-package org.msy.hospital;
+package org.msy.hospital.dict;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,14 +6,14 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @author ${USER}
- * @date ${DATE}
+ * @author 11612
+ * @date 2023/3/23
  */
 @SpringBootApplication
 @ComponentScan("org.msy")
 @EnableDiscoveryClient
-public class ServiceHospitalMainApp {
+public class ServiceDictMainApp {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceHospitalMainApp.class, args);
+        SpringApplication.run(ServiceDictMainApp.class,args);
     }
 }

@@ -1,6 +1,10 @@
 server:
-  port: 8001
+  port: 8002
 spring:
+  application:
+    name: service-dict
+  profiles:
+    active: dev
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -10,18 +14,19 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  data:
-    mongodb:
-      uri: mongodb://admin:123456@192.168.153.129:27017/yygh_hosp
+  redis:
+    host: 192.168.153.129
+    port: 6379
+    password: 123456
+    database: 0
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
   cloud:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-  application:
-    name: service-hospital
-  profiles:
-    active: dev
-logging:
-  level:
-    root: warn
-

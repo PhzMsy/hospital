@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author 11612
  * @date 2023/3/27
@@ -21,4 +23,6 @@ public class DepartmentVo {
     private String bigcode;
     @ApiModelProperty(value = "大科室名称")
     private String bigname;
+    @ApiModelProperty("下级节点")
+    private List<DepartmentVo> children;
 }

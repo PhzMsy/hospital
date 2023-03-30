@@ -5,6 +5,7 @@ import org.msy.hospital.common.result.ResultCodeEnum;
 import org.msy.hospital.common.utils.HttpRequestHelper;
 import org.msy.hospital.common.utils.MD5;
 import org.msy.hospital.service.HospService;
+import org.msy.hospital.service.HospitalService;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,7 @@ public class BaseController {
     /**
      * 签名校验
      */
-    public void checkSignKey(Map<String,Object> paramMap, HospService hospService){
+    public void checkSignKey(Map<String,Object> paramMap, HospitalService hospService){
         String hoscode = (String)paramMap.get("hoscode");
         if(!StringUtils.hasLength(hoscode)) {
             throw new YyghException(ResultCodeEnum.PARAM_ERROR);

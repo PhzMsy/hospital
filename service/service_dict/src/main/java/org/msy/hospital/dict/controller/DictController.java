@@ -63,5 +63,14 @@ public class DictController {
     public String getName(@PathVariable String value) {
         return dictService.getDictName("",value);
     }
+    /**
+     * 根据dictCode获取子节点
+     */
+    @ApiOperation("根据dictCode获取子节点")
+    @GetMapping("findByDictCode/{dictCode}")
+    public Result findByDictCode(@PathVariable String dictCode) {
+        List<Dict> dictList = dictService.findByDictCode(dictCode);
+        return Result.ok(dictList);
+    }
 
 }

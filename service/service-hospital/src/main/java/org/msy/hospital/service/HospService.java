@@ -13,20 +13,5 @@ import java.util.Map;
  * @date 2023/3/20
  */
 public interface HospService extends IService<HospitalSet> {
-    /**
-     * 上传医院信息
-     */
-    void save(Map<String,Object> paramMap);
-    /**
-     * 获取签名key
-     */
-    String getSignKey(String hoscode);
-    /**
-     * 查询医院
-     */
-    Hospital getByHoscode(String hoscode);
-    /**
-     * 条件、分页查询医院信息
-     */
-    Page<Hospital> selectHospPage(Integer page, Integer limit, HospitalQueryVo vo);
+
 }

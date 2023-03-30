@@ -1,5 +1,6 @@
 package org.msy.hospital.vo.hosp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class ScheduleQueryVo {
     private String doccode;
 
     @ApiModelProperty(value = "安排日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date workDate;
 
     @ApiModelProperty(value = "安排时间（0：上午 1：下午）")

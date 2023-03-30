@@ -12,6 +12,7 @@ import org.msy.hospital.model.hosp.Hospital;
 import org.msy.hospital.model.hosp.Schedule;
 import org.msy.hospital.service.DepartmentService;
 import org.msy.hospital.service.HospService;
+import org.msy.hospital.service.HospitalService;
 import org.msy.hospital.service.ScheduleService;
 import org.msy.hospital.vo.hosp.DepartmentVo;
 import org.msy.hospital.vo.hosp.ScheduleQueryVo;
@@ -35,7 +36,7 @@ import java.util.Map;
 @RequestMapping("/api/hosp")
 public class ApiController extends BaseController {
     @Autowired
-    private HospService hospServiceImpl;
+    private HospitalService hospitalServiceImpl;
     @Autowired
     private DepartmentService departmentServiceImpl;
     @Autowired
@@ -44,14 +45,14 @@ public class ApiController extends BaseController {
     @PostMapping("saveHospital")
     public Result saveHospital(HttpServletRequest request) {
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap, hospServiceImpl);
+        checkSignKey(paramMap, hospitalServiceImpl);
 //传输过程中“+”转换为了“ ”，因此我们要转换回来
         String logoDataString = (String) paramMap.get("logoData");
         if (StringUtils.hasLength(logoDataString)) {
             String logoData = logoDataString.replaceAll(" ", "+");
             paramMap.put("logoData", logoData);
         }
-        hospServiceImpl.save(paramMap);
+        hospitalServiceImpl.save(paramMap);
         return Result.ok();
     }
 
@@ -59,8 +60,8 @@ public class ApiController extends BaseController {
     @PostMapping("hospital/show")
     public Result hospital(HttpServletRequest request) {
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap, hospServiceImpl);
-        Hospital hospital = hospServiceImpl.getByHoscode((String)
+        checkSignKey(paramMap, hospitalServiceImpl);
+        Hospital hospital = hospitalServiceImpl.getByHoscode((String)
                 paramMap.get("hoscode"));
         return Result.ok(hospital);
 
@@ -70,7 +71,7 @@ public class ApiController extends BaseController {
     @PostMapping("saveDepartment")
     public Result saveDepartment(HttpServletRequest request) {
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap, hospServiceImpl);
+        checkSignKey(paramMap, hospitalServiceImpl);
         departmentServiceImpl.save(paramMap);
         return Result.ok();
     }
@@ -79,7 +80,7 @@ public class ApiController extends BaseController {
     @PostMapping("department/list")
     public Result department(HttpServletRequest request) {
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap, hospServiceImpl);
+        checkSignKey(paramMap, hospitalServiceImpl);
 // 条件查询
 // 医院编号
         String hoscode = (String) paramMap.get("hoscode");
@@ -102,7 +103,7 @@ public class ApiController extends BaseController {
     @PostMapping("department/remove")
     public Result removeDepartment(HttpServletRequest request) {
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap, hospServiceImpl);
+        checkSignKey(paramMap, hospitalServiceImpl);
         String hoscode = (String) paramMap.get("hoscode");
         String depcode = (String) paramMap.get("depcode");
         departmentServiceImpl.remove(hoscode, depcode);
@@ -112,7 +113,7 @@ public class ApiController extends BaseController {
     @PostMapping("saveSchedule")
     public Result saveSchedule(HttpServletRequest request) {
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap, hospServiceImpl);
+        checkSignKey(paramMap, hospitalServiceImpl);
         scheduleServiceImpl.save(paramMap);
         return Result.ok();
     }
@@ -120,7 +121,7 @@ public class ApiController extends BaseController {
     @PostMapping("schedule/list")
     public Result schedule(HttpServletRequest request){
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap,hospServiceImpl);
+        checkSignKey(paramMap,hospitalServiceImpl);
         String hoscode = (String) paramMap.get("hoscode");
         String depcode = (String) paramMap.get("depcode");
         int page = !StringUtils.hasLength((String) paramMap.get("page")) ? 1 : Integer.parseInt((String) paramMap.get("page"));
@@ -136,7 +137,7 @@ public class ApiController extends BaseController {
     @PostMapping("schedule/remove")
     public Result removeSchedule(HttpServletRequest request){
         Map<String, Object> paramMap = getParamMap(request);
-        checkSignKey(paramMap,hospServiceImpl);
+        checkSignKey(paramMap,hospitalServiceImpl);
         String hoscode = (String) paramMap.get("hoscode");
         String hosScheduleId = (String) paramMap.get("hosScheduleId");
         scheduleServiceImpl.remove(hoscode,hosScheduleId);

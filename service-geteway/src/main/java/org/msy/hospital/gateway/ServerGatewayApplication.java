@@ -1,21 +1,20 @@
-package org.msy.hospital;
+package org.msy.hospital.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @author ${USER}
- * @date ${DATE}
+ * @author 11612
+ * @date 2023/3/29
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan("org.msy")
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "org.msy")
-public class ServiceHospitalMainApp {
+public class ServerGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceHospitalMainApp.class, args);
+        SpringApplication.run(ServerGatewayApplication.class, args);
     }
 }

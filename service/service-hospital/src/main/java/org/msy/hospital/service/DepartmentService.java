@@ -4,6 +4,7 @@ import org.msy.hospital.model.hosp.Department;
 import org.msy.hospital.vo.hosp.DepartmentVo;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,11 @@ public interface DepartmentService {
      * @param depcode
      */
     void remove(String hoscode, String depcode);
+
+    List<DepartmentVo> getDeptTree(String hosCode);
+    /**
+     * 根据医院编号、科室编号 查询科室名称
+     */
+    String getDepName(String hoscode, String depcode);
+
 }

@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author 11612
@@ -71,5 +74,53 @@ public class DepartmentServiceImpl implements DepartmentService {
             departmentRepository.deleteById(dept.getId());
         }
     }
+
+    @Override
+    public List<DepartmentVo> getDeptTree(String hosCode) {
+        List<DepartmentVo> result = new ArrayList<>();
+        Department department = new Department();
+        department.setHoscode(hosCode);
+        Example<Department> example = Example.of(department);
+        List<Department> all = departmentRepository.findAll(example);
+        Map<String, List<Department>> deptsMap =
+                all.stream().collect(Collectors.groupingBy(Department::getBigcode));
+        for (Map.Entry<String, List<Department>> entry : deptsMap.entrySet()) {
+            // 父科室编号
+            String bigcode = entry.getKey();
+// 属于该父科室的子科室数据集
+            List<Department> childDeptList = entry.getValue();
+// 封装父科室数据
+            DepartmentVo parentVo = new DepartmentVo();
+// 父科室编号
+            parentVo.setDepcode(bigcode);
+// 父科室名称
+            parentVo.setDepname(childDeptList.get(0).getBigname());
+// 封装子科室
+            List<DepartmentVo> childrenVoList = new ArrayList<>();
+            for (Department dept : childDeptList) {
+                DepartmentVo childVo = new DepartmentVo();
+                childVo.setDepcode(dept.getDepcode());
+                childVo.setDepname(dept.getDepname());
+                childrenVoList.add(childVo);
+
+            }
+            // 封装子科室数据
+            parentVo.setChildren(childrenVoList);
+// 封装父科室数据
+            result.add(parentVo);
+
+        }
+        return result;
+    }
+    @Override
+    public String getDepName(String hoscode, String depcode) {
+        Department dept =
+                departmentRepository.getDepartmentByHoscodeAndDepcode(hoscode, depcode);
+        if(dept != null) {
+            return dept.getDepname();
+        }
+        return null;
+    }
+
 }
 

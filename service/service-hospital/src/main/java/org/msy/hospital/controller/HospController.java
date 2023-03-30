@@ -12,6 +12,7 @@ import org.msy.hospital.common.utils.MD5;
 import org.msy.hospital.model.hosp.Hospital;
 import org.msy.hospital.model.hosp.HospitalSet;
 import org.msy.hospital.service.HospService;
+import org.msy.hospital.service.HospitalService;
 import org.msy.hospital.vo.hosp.HospitalSetQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -32,6 +33,8 @@ import java.util.Random;
 public class HospController {
     @Autowired
     private HospService hospServiceImpl;
+    @Autowired
+    private HospitalService hospitalServiceImpl;
     /*@GetMapping("/findAll")
     public List<HospitalSet> findAllHosptialSets() {
         List<HospitalSet> list = hospServiceImpl.list();
@@ -158,7 +161,7 @@ public class HospController {
             throw new YyghException(ResultCodeEnum.PARAM_ERROR);
         }
         String signKey = (String)paramMap.get("sign");
-        String utfSignKey = hospServiceImpl.getSignKey(hoscode);
+        String utfSignKey = hospitalServiceImpl.getSignKey(hoscode);
         if(!StringUtils.hasLength(utfSignKey)){
             try {
                 byte[] bytes = utfSignKey.getBytes("UTF-8");
@@ -171,7 +174,7 @@ public class HospController {
         if(!signKey.equals(signKeyMD5)) {
             throw new YyghException(ResultCodeEnum.SIGN_ERROR);
         }
-        Hospital hospital = hospServiceImpl.getByHoscode((String)
+        Hospital hospital = hospitalServiceImpl.getByHoscode((String)
                 paramMap.get("hoscode"));
         return Result.ok(hospital);
     }

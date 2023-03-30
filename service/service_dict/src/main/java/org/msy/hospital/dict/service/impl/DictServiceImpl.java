@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Service
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
-    @Cacheable(value = "dict",keyGenerator = "keyGenerator")
+    @Cacheable(value = "dict", keyGenerator = "keyGenerator")
     @Override
     public List<Dict> findChildrenData(Long id) {
         // 根据父id查询子数据
@@ -67,7 +67,8 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
 
     }
-    @CacheEvict(value = "dict",allEntries = true)
+
+    @CacheEvict(value = "dict", allEntries = true)
     @Override
     public void importData(MultipartFile file) {
         try {
@@ -86,11 +87,13 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         Long aLong = baseMapper.selectCount(wrapper);
         return aLong > 0;
     }
+
     @Override
     public String getDictName(String dictCode, String value) {
-        if(StringUtils.hasLength(dictCode)) {
-            Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>
-                    ().eq("dict_code",dictCode));
+        if (StringUtils.hasLength(dictCode)) {
+            /*Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>
+                    ().eq("dict_code", dictCode));*/
+            Dict dict = this.getDictByDictCode(dictCode);
             Long parentId = dict.getId();
             Dict resultDict = baseMapper.selectOne(new QueryWrapper<Dict>()
                     .eq("parent_id", parentId)
@@ -98,10 +101,23 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             return resultDict.getName();
         } else {
             QueryWrapper<Dict> wrapper = new QueryWrapper<>();
-            wrapper.eq("value",value);
+            wrapper.eq("value", value);
             Dict dict = baseMapper.selectOne(wrapper);
             return dict.getName();
         }
     }
+
+    private Dict getDictByDictCode(String dictCode) {
+        Dict dict = baseMapper.selectOne(new QueryWrapper<Dict>
+                ().eq("dict_code", dictCode));
+        return dict;
+    }
+    // 省份查询
+    @Override
+    public List<Dict> findByDictCode(String dictCode) {
+        Dict dict = getDictByDictCode(dictCode);
+        return findChildrenData(dict.getId());
+    }
+
 
 }

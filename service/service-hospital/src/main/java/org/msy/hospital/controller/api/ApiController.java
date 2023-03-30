@@ -1,4 +1,4 @@
-package org.msy.hospital.controller;
+package org.msy.hospital.controller.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -7,6 +7,7 @@ import org.msy.hospital.common.result.Result;
 import org.msy.hospital.common.result.ResultCodeEnum;
 import org.msy.hospital.common.utils.HttpRequestHelper;
 import org.msy.hospital.common.utils.MD5;
+import org.msy.hospital.controller.BaseController;
 import org.msy.hospital.model.hosp.Department;
 import org.msy.hospital.model.hosp.Hospital;
 import org.msy.hospital.model.hosp.Schedule;

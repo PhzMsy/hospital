@@ -5,7 +5,7 @@ import org.msy.hospital.model.hosp.Hospital;
 import org.msy.hospital.vo.hosp.HospitalQueryVo;
 
 
-
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +41,12 @@ public interface HospitalService {
      * 根据编号获取名称
      */
     String getHospName(String hosCode);
-
-
+    /**
+     * 根据医院名称查询医院信息(用户系统-首页)
+     */
+    List<Hospital> findByHosname(String hosname);
+    /**
+     * 医院预约挂号详情
+     */
+    Map<String,Object> item(String hoscode);
 }

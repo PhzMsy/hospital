@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -193,5 +194,20 @@ public class HospitalServiceImpl implements HospitalService {
         }
         return null;
     }
+
+    @Override
+    public List<Hospital> findByHosname(String hosname) {
+        return hospitalRepository.findHospitalByHosnameLike(hosname);
+    }
+    @Override
+    public Map<String, Object> item(String hoscode) {
+        Map<String, Object> result = new HashMap<>();
+// 医院详情
+        Hospital hospital = this.getByHoscode(hoscode);
+        result.put("hospital",hospital);
+        result.put("bookingRule",hospital.getBookingRule());
+        return result;
+    }
+
 
 }
